@@ -8,7 +8,7 @@ This is the first and only *individual* (as opposed to *team*) this semester.
 
 Term: Spring 2018
 
-+ Projec title: Data Story on Presidential Inaugural Speeches
++ Projec title: Know Grover Cleveland and Franklin D. Roosevelt from Presidential Inaugural Speeches
 + This project is conducted by Yuehan Kong
 
 + Project summary: Here is the little story I realized after doing a brief study about the texts of 58 U.S. presidents' inaugural speeches from George Washington to that of Donald Trump. I focused most on some presidents who won the presidential election more than one term and another two “special” presidents named Grover Cleveland and Franklin D. Roosevelt respectively. 
