@@ -15,7 +15,7 @@ Term: Spring 2018
 
 [See story (web page)](file:///Users/yuehankong/Desktop/GR%205243/Project/Spring2018-Project1-yuehankong-master/doc/Project1.nb.html)
 
-[See code (R notebook)](https://github.com/TZstatsADS/Spring2018-Project1-yuehankong/blob/master/doc/Project1.Rmd)
+[See code (R Notebook)](https://github.com/TZstatsADS/Spring2018-Project1-yuehankong/blob/master/doc/Project1.Rmd)
 
 Following [suggestions](http://nicercode.github.io/blog/2013-04-05-projects/) by [RICH FITZJOHN](http://nicercode.github.io/about/#Team) (@richfitz). This folder is orgarnized as follows.
 
