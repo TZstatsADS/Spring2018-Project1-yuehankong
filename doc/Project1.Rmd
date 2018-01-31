@@ -5,19 +5,8 @@ output:
     df_print: paged
 ---
 
-/
 
-#### Here is the little story I realized after doing a brief study about the texts of 58 U.S. presidents' inaugural speeches from George Washington to that of Donald Trump. I focused most on some presidents who won the presidential election more than one term and another two “special” presidents named Grover Cleveland and Franklin D. Roosevelt respectively. I got the number 0.4 by simple calculation, which indicates that there were approximately 40% of presidents who served for another term of United States. 
-
-#### By doing the analysis about each presidents’ length of words in their inaugural speeches, I saw the trend that if presidents won more than one term, most of them tended to speak less than or almost the same number of words in the next term’s inaugural speeches. Few reelected presidents spoke more than their first term’s inaugural speeches. I guess the reason is that, as citizens get more familiar with the current president and if they really admire him, the positive relationship will build between people and their president. When the next election comes, the president can still win without saying so much.
-
-#### Besides, I found two special cases about reelected presidents. One is Grover Cleveland who was the only president to leave the White House and returned for a second term four years later. Moreover, after searching online, I knew that he won the popular vote for three presidential elections which were in year 1884, 1888, and 1892. During the era of Republican party domination, he was Democrats to be elected as U.S. president. The other one is Franklin D. Roosevelt who was the only president in the American history that won four consecutive presidential elections. This is the strong evidence to show that how eminent he was to work as the president. 
-
-#### Based on all information I collected before, I tried to analyze what kinds of topics presidents liked to say in their inaugural speeches. Using topic modeling, classifying 15 topics from “Industry” to “Patriot”, I mainly focused on five categories that I though citizens cared about most, which were "Equality", "Protection", "HumanRight", "Freedom" and "Welfare" respectively. I only plotted graphs for two special presidents Grover Cleveland and Franklin D. Roosevelt. For the same president in different two terms, the weighted number for five topics in their speeches were almost the same, which means fields both dedicated to did not change so much in different years.  Moreover, the order of topics was almost the same for the two except only slightly different weighted numbers. The order from more to less was "Welfare", "Freedom”, “HumanRight”, “Protection" and "Equality". Both presidents delivered speeches mainly about welfare in those five ones. I believed this is true because welfare is a typical indicator to represent people’s happiness and living standard. I can pretty sure to say every president wants to build a harmonious country for their citizens.  
-
-/
-
-##### Below is my specific study
+##### Here is my specific study
 ```{r, message=FALSE, warning=FALSE}
 # Load libraries:
 library(rvest)
@@ -328,17 +317,4 @@ http://www.presidency.ucsb.edu/inaugurals.php
 https://github.com/TZstatsADS/ADS_Teaching/blob/master/Tutorials/wk2-TextMining/doc/wk2-Tutorial-TextMining.Rmd
 
 /
-
-
-
-
-
-
-
-
-
-
-
-
-
 
