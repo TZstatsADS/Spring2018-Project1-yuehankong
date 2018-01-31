@@ -13,6 +13,9 @@ Term: Spring 2018
 
 + Project summary: Here is the little story I realized after doing a brief study about the texts of 58 U.S. presidents' inaugural speeches from George Washington to that of Donald Trump. I focused most on some presidents who won the presidential election more than one term and another two “special” presidents named Grover Cleveland and Franklin D. Roosevelt respectively. 
 
+[See story (web page)](file:///Users/yuehankong/Desktop/GR%205243/Project/Spring2018-Project1-yuehankong-master/doc/Project1.nb.html)
+
+[See code (R notebook)](https://github.com/TZstatsADS/Spring2018-Project1-yuehankong/blob/master/doc/Project1.Rmd)
 
 Following [suggestions](http://nicercode.github.io/blog/2013-04-05-projects/) by [RICH FITZJOHN](http://nicercode.github.io/about/#Team) (@richfitz). This folder is orgarnized as follows.
 
