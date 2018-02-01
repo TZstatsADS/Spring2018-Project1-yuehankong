@@ -1,9 +1,10 @@
 ---
-title: "R Notebook"
+title: "Know Grover Cleveland and Franklin D. Roosevelt from Presidential Inaugural Speeches"
 output:
   html_notebook:
     df_print: paged
 ---
+##### Yuehan Kong (yk2756)
 
 /
 
@@ -56,6 +57,8 @@ inaug.info <- read.csv("../data/InaugurationInfo.csv", 1, stringsAsFactors = FAL
 ```
 
 /
+
+### Finding 1:
 
 ### Presidents who left the White House and returned for a second term four years later:
 
@@ -131,6 +134,8 @@ inaug.list[con, "Reelection"] <- "No"
 
 /
 
+### Finding 2:
+
 ### The proportion of reelected presidents:
 
 /
@@ -141,7 +146,11 @@ prop <- ree.num/total.num
 prop
 ```
 
+##### There were approximately 40% of presidents who served for another term of United States. 
+
 /
+
+### Finding 3:
 
 ### The number of words in different terms for reelected presidents:
 
@@ -163,7 +172,7 @@ ggplot(ree.df[23:34, ], aes(factor(President), Words, fill = Term)) +
   labs(title = "The number of words in different terms for reelected presidents", 
        x = "Presidents", y = "The number of words")
 ```
-
+##### The trend I found is that presidents won more than one term, most of them tended to speak less than or almost the same number of words in the next term’s inaugural speeches.
 
 ###### Most of codes below are built based on the website "https://github.com/TZstatsADS/ADS_Teaching/blob/master/Tutorials/wk2-TextMining/doc/wk2-Tutorial-TextMining.Rmd" 
 
@@ -271,6 +280,8 @@ corpus.df <- cbind(corpus, prop.topics)
 
 /
 
+### Finding 4:
+
 ### Topics weighted plot for president Grover Cleveland:
 
 /
@@ -314,6 +325,7 @@ plot.stacked(inaug.df[,1], inaug.df[,t.plot+1], main="Franklin D. Roosevelt's Te
              xlab="Sentences ID", ylab="Topics")
 ```
 
+##### For the same president in different two terms, the weighted number for five topics in their speeches were almost the same, which means fields both dedicated to did not change so much in different years.  Moreover, the order of topics was almost the same for the two except only slightly different weighted numbers. The order from more to less was "Welfare", "Freedom”, “HumanRight”, “Protection" and "Equality". Both presidents delivered speeches mainly about welfare in those five ones.
 
 /
 
