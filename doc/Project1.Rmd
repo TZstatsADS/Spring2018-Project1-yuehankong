@@ -4,21 +4,20 @@ output:
   html_notebook:
     df_print: paged
 ---
-##### Yuehan Kong (yk2756)
+Yuehan Kong (yk2756)
 
-/
+### Data Story
 
-#### Here is the little story I realized after doing a brief study about the texts of 58 U.S. presidents' inaugural speeches from George Washington to that of Donald Trump. I focused most on some presidents who won the presidential election more than one term and another two “special” presidents named Grover Cleveland and Franklin D. Roosevelt respectively. I got the number 0.4 by simple calculation, which indicates that there were approximately 40% of presidents who served for another term of United States. 
+Here is the little story I realized after doing a brief study about the texts of 58 U.S. presidents' inaugural speeches from George Washington to that of Donald Trump. I focused most on some presidents who won the presidential election more than one term and another two “special” presidents named Grover Cleveland and Franklin D. Roosevelt respectively. I got the number 0.4 by simple calculation, which indicates that there were approximately 40% of presidents who served for another term of United States. 
 
-#### By doing the analysis about each presidents’ length of words in their inaugural speeches, I saw the trend that if presidents won more than one term, most of them tended to speak less than or almost the same number of words in the next term’s inaugural speeches. Few reelected presidents spoke more than their first term’s inaugural speeches. I guess the reason is that, as citizens get more familiar with the current president and if they really admire him, the positive relationship will build between people and their president. When the next election comes, the president can still win without saying so much.
+By doing the analysis about each presidents’ length of words in their inaugural speeches, I saw the trend that if presidents won more than one term, most of them tended to speak less than or almost the same number of words in the next term’s inaugural speeches. Few reelected presidents spoke more than their first term’s inaugural speeches. I guess the reason is that, as citizens get more familiar with the current president and if they really admire him, the positive relationship will build between people and their president. When the next election comes, the president can still win without saying so much.
 
-#### Besides, I found two special cases about reelected presidents. One is Grover Cleveland who was the only president to leave the White House and returned for a second term four years later. Moreover, after searching online, I knew that he won the popular vote for three presidential elections which were in year 1884, 1888, and 1892. During the era of Republican party domination, he was Democrats to be elected as U.S. president. The other one is Franklin D. Roosevelt who was the only president in the American history that won four consecutive presidential elections. This is the strong evidence to show that how eminent he was to work as the president. 
+Besides, I found two special cases about reelected presidents. One is Grover Cleveland who was the only president to leave the White House and returned for a second term four years later. Moreover, after searching online, I knew that he won the popular vote for three presidential elections which were in year 1884, 1888, and 1892. During the era of Republican party domination, he was Democrats to be elected as U.S. president. The other one is Franklin D. Roosevelt who was the only president in the American history that won four consecutive presidential elections. This is the strong evidence to show that how eminent he was to work as the president. 
 
-#### Based on all information I collected before, I tried to analyze what kinds of topics presidents liked to say in their inaugural speeches. Using topic modeling, classifying 15 topics from “Industry” to “Patriot”, I mainly focused on five categories that I though citizens cared about most, which were "Equality", "Protection", "HumanRight", "Freedom" and "Welfare" respectively. I only plotted graphs for two special presidents Grover Cleveland and Franklin D. Roosevelt. For the same president in different two terms, the weighted number for five topics in their speeches were almost the same, which means fields both dedicated to did not change so much in different years.  Moreover, the order of topics was almost the same for the two except only slightly different weighted numbers. The order from more to less was "Welfare", "Freedom”, “HumanRight”, “Protection" and "Equality". Both presidents delivered speeches mainly about welfare in those five ones. I believed this is true because welfare is a typical indicator to represent people’s happiness and living standard. I can pretty sure to say every president wants to build a harmonious country for their citizens.  
+Based on all information I collected before, I tried to analyze what kinds of topics presidents liked to say in their inaugural speeches. Using topic modeling, classifying 15 topics from “Industry” to “Patriot”, I mainly focused on five categories that I though citizens cared about most, which were "Equality", "Protection", "HumanRight", "Freedom" and "Welfare" respectively. I only plotted graphs for two special presidents Grover Cleveland and Franklin D. Roosevelt. For the same president in different two terms, the weighted number for five topics in their speeches were almost the same, which means fields both dedicated to did not change so much in different years.  Moreover, the order of topics was almost the same for the two except only slightly different weighted numbers. The order from more to less was "Welfare", "Freedom”, “HumanRight”, “Protection" and "Equality". Both presidents delivered speeches mainly about welfare in those five ones. I believed this is true because welfare is a typical indicator to represent people’s happiness and living standard. I can pretty sure to say every president wants to build a harmonious country for their citizens.  
 
-/
-
-##### Below is my specific study
+### Data cleaning
+#### Load libraries
 ```{r, message=FALSE, warning=FALSE}
 # Load libraries:
 library(rvest)
@@ -44,40 +43,20 @@ source("../lib/plotstacked.R")
 source("../lib/speechFuncs.R")
 ```
 
-
-###### This notebook was prepared with the following environmental settings
 ```{r}
+# This notebook was prepared with the following environmental settings
 print(R.version)
 ```
 
+#### Read the data
 ```{r}
 # Load the data
 inaug.date <- read.table("../data/InauguationDates.txt", header = TRUE, stringsAsFactors = FALSE, sep = "\t")
 inaug.info <- read.csv("../data/InaugurationInfo.csv", 1, stringsAsFactors = FALSE)
 ```
 
-/
 
-### Finding 1:
-
-### Presidents who left the White House and returned for a second term four years later:
-
-/
-```{r}
-inaug.date[inaug.date$FIRST == "" & inaug.date$SECOND != "", ]$PRESIDENT
-```
-
-/
-
-### Presidents who held a post more than two terms:
-
-/
-```{r}
-inaug.info$President[inaug.info$Term > 2]
-```
-
-
-###### Check two dataframes to see whether they can combined together
+#### Enrich the data: Add new vectors
 ```{r}
 # Check two dataframes' president variable consistency
 p.info <- unique(inaug.info$President)
@@ -98,9 +77,6 @@ inaug.date.del[inaug.date.del$PRESIDENT == "Calvin Coolidge", "SECOND"] <- ""
 inaug.date.del[inaug.date.del$PRESIDENT == "Harry S. Truman", "SECOND"] <- ""
 inaug.date.del[inaug.date.del$PRESIDENT == "Lyndon B. Johnson" , "SECOND"] <- ""
 ```
-
-
-###### Build inaug.list with inaug.info and two new vectors "Date", "Reelection" 
 ```{r}
 # Create the Date vector
 Date <- NULL
@@ -132,51 +108,9 @@ con <- inaug.list$President == "Grover Cleveland - I"| inaug.list$President == "
 inaug.list[con, "Reelection"] <- "No"
 ```
 
-/
+#### Most of codes below are built based on the website "https://github.com/TZstatsADS/ADS_Teaching/blob/master/Tutorials/wk2-TextMining/doc/wk2-Tutorial-TextMining.Rmd" 
 
-### Finding 2:
-
-### The proportion of reelected presidents:
-
-/
-```{r}
-ree.num <- length(unique(inaug.list[inaug.list$Reelection == "Yes", ]$President))
-total.num <- length(unique(inaug.list$President))
-prop <- ree.num/total.num
-prop
-```
-
-##### There were approximately 40% of presidents who served for another term of United States. 
-
-/
-
-### Finding 3:
-
-### The number of words in different terms for reelected presidents:
-
-/
-```{r}
-ree.df <- inaug.list[inaug.list$Reelection == "Yes", c("President", "Term", "Words")]
-ree.df$Term <- factor(ree.df$Term)
-ree.df$Words <- as.numeric(ree.df$Words)
-ggplot(ree.df[1:10, ], aes(factor(President), Words, fill = Term)) +  
-  geom_bar(stat="identity", position = "dodge") + 
-  labs(title = "The number of words in different terms for reelected presidents", 
-       x = "Presidents", y = "The number of words")
-ggplot(ree.df[11:22, ], aes(factor(President), Words, fill = Term)) + 
-  geom_bar(stat="identity", position = "dodge") + 
-  labs(title = "The number of words in different terms for reelected presidents", 
-       x = "Presidents", y = "The number of words")
-ggplot(ree.df[23:34, ], aes(factor(President), Words, fill = Term)) + 
-  geom_bar(stat="identity", position = "dodge") + 
-  labs(title = "The number of words in different terms for reelected presidents", 
-       x = "Presidents", y = "The number of words")
-```
-##### The trend I found is that presidents won more than one term, most of them tended to speak less than or almost the same number of words in the next term’s inaugural speeches.
-
-###### Most of codes below are built based on the website "https://github.com/TZstatsADS/ADS_Teaching/blob/master/Tutorials/wk2-TextMining/doc/wk2-Tutorial-TextMining.Rmd" 
-
-###### Get inaugural speeches from the website "http://www.presidency.ucsb.edu/inaugurals.php"
+#### Get inaugural speeches from the website "http://www.presidency.ucsb.edu/inaugurals.php"
 ```{r}
 # Get speeches urls
 main.page <- read_html(x = "http://www.presidency.ucsb.edu/inaugurals.php")
@@ -196,8 +130,6 @@ for(i in 1:nrow(inaug.list)) {
 }
 ```
 
-
-###### Create the sen.list dataframe
 ```{r, message=FALSE, warning=FALSE}
 # Loop to assign a consecutive id to each sentence
 sen.list <- NULL
@@ -210,6 +142,7 @@ for(i in 1:nrow(inaug.list)){
 }
 ```
 
+#### Build a corpus of sentence Snipets
 ```{r}
 # Build a corpus of sentence Snipets
 corpus <- sen.list[2:(nrow(sen.list)-1), ]
@@ -226,8 +159,8 @@ corpus <- corpus[-rm.rows, ]
 docs <- Corpus(VectorSource(corpus$Snipets))
 ```
 
+#### Text processing
 ```{r}
-# Text processing
 docs <- tm_map(docs, stripWhitespace) #get rid of whitespace
 docs <- tm_map(docs, removePunctuation) #get rid of punctuation
 docs <- tm_map(docs, removeNumbers) #get rid of digits
@@ -244,6 +177,8 @@ dtm <- dtm[total>0, ]
 corpus <- corpus[total>0, ]
 ```
 
+### Data Analysis 
+#### Build LDA
 ```{r}
 # Parameters about Gibbs sampling
 burnin <- 4000
@@ -261,6 +196,7 @@ ldaout<-LDA(dtm, k, method="Gibbs", control=list(nstart=nstart, seed = seed, bes
                                                  burnin = burnin, iter = iter, thin=thin))
 ```
 
+#### Top 10 terms in each topic
 ```{r}
 l.topics <- as.matrix(topics(ldaout)) # Convert to topics
 l.terms <- as.matrix(terms(ldaout,10)) # Top 10 terms in each topic
@@ -278,13 +214,49 @@ colnames(prop.topics) <- htag
 corpus.df <- cbind(corpus, prop.topics)
 ```
 
-/
+### Four Findings:
 
-### Finding 4:
+#### 1.1 Presidents who left the White House and returned for a second term four years later:
+```{r}
+inaug.date[inaug.date$FIRST == "" & inaug.date$SECOND != "", ]$PRESIDENT
+```
 
-### Topics weighted plot for president Grover Cleveland:
+#### 1.2 Presidents who held a post more than two terms:
+```{r}
+inaug.info$President[inaug.info$Term > 2]
+```
 
-/
+#### 2 The proportion of reelected presidents:
+```{r}
+ree.num <- length(unique(inaug.list[inaug.list$Reelection == "Yes", ]$President))
+total.num <- length(unique(inaug.list$President))
+prop <- ree.num/total.num
+prop
+```
+
+There were approximately 40% of presidents who served for another term of United States. 
+
+#### 3 The number of words in different terms for reelected presidents:
+```{r}
+ree.df <- inaug.list[inaug.list$Reelection == "Yes", c("President", "Term", "Words")]
+ree.df$Term <- factor(ree.df$Term)
+ree.df$Words <- as.numeric(ree.df$Words)
+ggplot(ree.df[1:10, ], aes(factor(President), Words, fill = Term)) +  
+  geom_bar(stat="identity", position = "dodge") + 
+  labs(title = "The number of words in different terms for reelected presidents", 
+       x = "Presidents", y = "The number of words")
+ggplot(ree.df[11:22, ], aes(factor(President), Words, fill = Term)) + 
+  geom_bar(stat="identity", position = "dodge") + 
+  labs(title = "The number of words in different terms for reelected presidents", 
+       x = "Presidents", y = "The number of words")
+ggplot(ree.df[23:34, ], aes(factor(President), Words, fill = Term)) + 
+  geom_bar(stat="identity", position = "dodge") + 
+  labs(title = "The number of words in different terms for reelected presidents", 
+       x = "Presidents", y = "The number of words")
+```
+The trend I found is that presidents won more than one term, most of them tended to speak less than or almost the same number of words in the next term’s inaugural speeches.
+
+#### 4.1 Topics weighted plot for president Grover Cleveland:
 ```{r}
 t.plot <- c(5, 7, 8, 10, 12) # Choose specific topics
 print(htag[t.plot])
@@ -304,11 +276,7 @@ plot.stacked(inaug.df[,1], inaug.df[,t.plot+1], main="Grover Cleveland's Term2 I
              xlab="Sentences ID", ylab="Topics")
 ```
 
-/
-
-### Topics weighted plot for president Franklin D. Roosevelt:
-
-/
+### 4.2 Topics weighted plot for president Franklin D. Roosevelt:
 ```{r}
 inaug.df <- tbl_df(corpus.df)%>%filter(File=="FranklinDRoosevelt", Term==1)%>%select(Sen.id, Industry:Patriot)
 inaug.df <- as.matrix(inaug.df)
@@ -325,11 +293,10 @@ plot.stacked(inaug.df[,1], inaug.df[,t.plot+1], main="Franklin D. Roosevelt's Te
              xlab="Sentences ID", ylab="Topics")
 ```
 
-##### For the same president in different two terms, the weighted number for five topics in their speeches were almost the same, which means fields both dedicated to did not change so much in different years.  Moreover, the order of topics was almost the same for the two except only slightly different weighted numbers. The order from more to less was "Welfare", "Freedom”, “HumanRight”, “Protection" and "Equality". Both presidents delivered speeches mainly about welfare in those five ones.
+For the same president in different two terms, the weighted number for five topics in their speeches were almost the same, which means fields both dedicated to did not change so much in different years.  Moreover, the order of topics was almost the same for the two except only slightly different weighted numbers. The order from more to less was "Welfare", "Freedom”, “HumanRight”, “Protection" and "Equality". Both presidents delivered speeches mainly about welfare in those five ones.
 
-/
 
-#### Code Reference
+### Code Reference
 
 https://github.com/TZstatsADS/ADS_Teaching/blob/master/Tutorials/wk2-TextMining/lib/plotstacked.R 
 
@@ -339,7 +306,7 @@ http://www.presidency.ucsb.edu/inaugurals.php
 
 https://github.com/TZstatsADS/ADS_Teaching/blob/master/Tutorials/wk2-TextMining/doc/wk2-Tutorial-TextMining.Rmd
 
-/
+
 
 
 
